@@ -13,7 +13,7 @@ renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(renderer.domElement)
 
 const geometry = new BoxGeometry()
-const material = new MeshBasicMaterial({ color: 0x004400 })
+const material = new MeshBasicMaterial({ color: 0x008800 })
 const cube = new Mesh(geometry, material)
 scene.add(cube)
 
