@@ -1,2 +1,2 @@
 # boilerplate
-minimalistic boilerplate
+minimalistic boilerplate (vanilla/bootstrap/three) – WIP...
