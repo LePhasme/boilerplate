@@ -1,4 +1,4 @@
-export const testTemplate = model => `
+export const testTemplate = (model) => `
     <section class="app">
         <h3> ${model.title} </h3>
         <section class="button">
