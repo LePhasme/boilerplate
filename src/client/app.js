@@ -18,6 +18,9 @@ const onWindowResize = function () {
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 };
+const settings = {
+  lineWidth: 2,
+};
 onWindowResize();
 document.body.appendChild(renderer.domElement);
 window.addEventListener('resize', onWindowResize, false);
@@ -40,7 +43,7 @@ geometry.deleteAttribute('normal');
 geometry.deleteAttribute('uv');
 setupAttributes(geometry);
 
-const uniforms = { widthFactor: { value: 2.0 } };
+const uniforms = { widthFactor: { value: settings.lineWidth } };
 
 const material = new THREE.ShaderMaterial({
   uniforms: uniforms,
@@ -59,8 +62,8 @@ camera.position.z = 5;
 
 const animate = function () {
   requestAnimationFrame(animate);
-  cube.rotation.x += 0.01;
-  cube.rotation.y += 0.01;
+  // cube.rotation.x += 0.01;
+  // cube.rotation.y += 0.01;
   renderer.render(scene, camera);
 };
 
@@ -77,6 +80,11 @@ ui.add('bool', {
     console.log(testTemplate({ title: 'test' }));
   },
 });
+ui.add('slide', { name: 'Line width', value: settings.lineWidth, min: 1, max: 10, precision: 0, step: 1 }).onChange(
+  (v) => {
+    settings.lineWidth = cube.material.uniforms.widthFactor.value = v;
+  },
+);
 
 if (WEBGL.isWebGLAvailable()) {
   animate();
