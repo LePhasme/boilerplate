@@ -6,7 +6,8 @@ const path = require('path')
 const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
-const webpackConfig = require(path.join(__dirname, 'webpack.config.js'))
+const basePath = path.resolve(__dirname, '..', '..')
+const webpackConfig = require(path.join(basePath, 'webpack.config.js'))
 const app = express()
 const port = (process.env.SERVER_MODE === 'dev' ? process.env.DEV_PORT : process.env.PROD_PORT)
 const devServerEnabled = (process.env.SERVER_MODE === 'dev' ? true : false)
@@ -21,7 +22,7 @@ if (devServerEnabled) {
   app.use(webpackHotMiddleware(compiler))
 }
 
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(basePath, 'public')))
 
 app.post('/api/add', multipart.any(), function(req, res) {
   const firstValue = parseInt(req.body.firstValue)

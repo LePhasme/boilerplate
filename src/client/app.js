@@ -3,7 +3,7 @@ import './scss/app.scss'
 import { Scene, PerspectiveCamera, WebGLRenderer, BoxGeometry, MeshBasicMaterial, Mesh } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as UIL from 'uil'
-import { testTemplate } from './templates/test.js'
+import { testTemplate } from '../shared/templates/test.js'
 
 const scene = new Scene()
 const camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)

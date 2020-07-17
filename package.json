@@ -2,7 +2,7 @@
   "name": "boilerplate",
   "version": "1.0.0",
   "description": "minimalistic boilerplate",
-  "main": "server.js",
+  "main": "src/server/server.js",
   "scripts": {
     "build": "env SERVER_MODE=prod webpack",
     "dev": "env SERVER_MODE=dev babel-watch .",

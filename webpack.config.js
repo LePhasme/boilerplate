@@ -22,13 +22,13 @@ module.exports = {
   },
   entry: {
     app: [
-      path.join(__dirname, 'src', 'app.js')
+      path.join(__dirname, 'src', 'client', 'app.js')
     ]
   },
   output: {
     path: path.join(__dirname, 'public', 'dist'),
     publicPath: '/dist/',
-    filename: 'main.js'
+    filename: 'app.js'
   },
   module: {
     rules: [{
