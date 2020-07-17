@@ -33,6 +33,15 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.(glsl|vs|fs)$/,
+        loader: 'shader-loader',
+        options: {
+          glsl: {
+            chunkPath: path.join(__dirname, 'src', 'client', 'shaders'),
+          },
+        },
+      },
+      {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
         use: [
