@@ -5,13 +5,20 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { WEBGL } from 'three/examples/jsm/WebGL.js';
 import * as UIL from 'uil';
 import { testTemplate } from '../shared/templates/test.js';
-
+import io from 'socket.io-client';
 import * as wireframeVertexShader from './shaders/wireframe.vs';
 import * as wireframeFragmentShader from './shaders/wireframe.fs';
+
+const socket = io();
+
+socket.on('init', (data) => {
+  console.log('init', data);
+});
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer({ antialias: true });
+const controls = new OrbitControls(camera, renderer.domElement);
 renderer.setPixelRatio(window.devicePixelRatio);
 const onWindowResize = function () {
   camera.aspect = window.innerWidth / window.innerHeight;
@@ -58,21 +65,31 @@ material.extensions.derivatives = true;
 const cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
 
-camera.position.z = 5;
-
+camera.position.z = 3;
+controls.update();
+controls.saveState();
 const animate = function () {
   requestAnimationFrame(animate);
   // cube.rotation.x += 0.01;
   // cube.rotation.y += 0.01;
+  controls.update();
   renderer.render(scene, camera);
 };
 
 const ui = new UIL.Gui({
-  css: 'top:145px; left:50%;',
-  size: 300,
-  center: true,
+  css: 'top:5px; left:5px;',
+  w: 200,
+  center: false,
 });
-ui.add('title', { name: 'Title' });
+ui.add('title', { name: 'Kinerama' });
+ui.add('button', {
+  name: 'Reset Camera',
+  callback: () => {
+    controls.reset();
+  },
+  h: 30,
+  p: 0,
+});
 ui.add('bool', {
   name: 'Bool',
   callback: (value) => {
@@ -80,11 +97,21 @@ ui.add('bool', {
     console.log(testTemplate({ title: 'test' }));
   },
 });
-ui.add('slide', { name: 'Line width', value: settings.lineWidth, min: 1, max: 10, precision: 0, step: 1 }).onChange(
-  (v) => {
-    settings.lineWidth = cube.material.uniforms.widthFactor.value = v;
-  },
-);
+ui.add('circular', {
+  name: 'Epaisseur',
+  w: 100,
+  value: settings.lineWidth,
+  min: 1,
+  max: 10,
+  precision: 0,
+  step: 1,
+}).onChange((v) => {
+  settings.lineWidth = cube.material.uniforms.widthFactor.value = v;
+});
+ui.add('joystick', { name: 'Rotation', w: 100, multiplicator: 0.5, precision: 2 }).onChange((v) => {
+  cube.rotation.x = -v[1];
+  cube.rotation.y = v[0];
+});
 
 if (WEBGL.isWebGLAvailable()) {
   animate();
