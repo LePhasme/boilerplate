@@ -46,7 +46,7 @@
     "jquery": "^3.5.1",
     "node-localstorage": "^2.1.6",
     "popper.js": "^1.16.1",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.4.0",
     "socket.io-client": "^2.3.0",
     "three": "^0.118.3",
     "uil": "^1.0.1"
